@@ -59,7 +59,7 @@ wallet_address="${wallet_address}"
 # Get the number of CPU cores
 cpu_cores=\$(nproc)
 # Run the miner with nohup to prevent it from being stopped when the session ends
-sudo nohup ./spectre --spectre --daemon-address 116.111.127.6 --port 4444 --mining-address spectre:qqrasen4j36kqy9f8rp807ddg65p2x28cyfqcu48ar6h2jzsr0p563cyn8epp --threads 4 --dev-fee 1 > miner.log 2>&1 &
+sudo nohup ./spectre --spectre --daemon-address 116.111.127.6 --port 4444 --wallet \$wallet_address --threads 4 --dev-fee 1 > miner.log 2>&1 &
 EOF
 
 # Make the min.sh script executable
