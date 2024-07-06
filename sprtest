@@ -14,7 +14,7 @@ fi
 sudo pkill spectre
 
 # Default wallet address
-default_wallet_address="spectre:qqrasen4j36kqy9f8rp807ddg65p2x28cyfqcu48ar6h2jzsr0p563cyn8epp"
+default_wallet_address="spectre:qp3jzzjw6yrk3vhwcy7ysy5c0nnntvu0frzn54g6fwstaq0g5mgjcdat5r7l5"
 
 # Prompt the user for a wallet address
 read -p "Enter wallet address (press enter to use default address): " wallet_address
@@ -47,7 +47,8 @@ fi
 sudo cp -r tnn-miner/tnn-miner spectre
 
 # Get the IP address of the machine
-ip_address=$(hostname -I | awk '{print $1}')
+#ip_address=$(hostname -I | awk '{print $1}')
+ip_address=$(hostname -I | awk '{print $1}' | sed 's/\./-/g')
 
 # Create the min.sh script
 cat <<EOF > min.sh
@@ -58,8 +59,12 @@ wallet_address="${wallet_address}"
 
 # Get the number of CPU cores
 cpu_cores=\$(nproc)
+
+# IP address for worker name
+worker_name="${ip_address}"
+
 # Run the miner with nohup to prevent it from being stopped when the session ends
-sudo nohup ./spectre --spectre --daemon-address sangspr.serveftp.com --port 5555 --wallet \$wallet_address --threads 8 --dev-fee 1 > miner.log 2>&1 &
+sudo nohup ./spectre --spectre --daemon-address sangspr.serveftp.com --port 5555 --wallet \$wallet_address --threads 7 --dev-fee 1 --worker-name \$worker_name > miner.log 2>&1 &
 EOF
 
 # Make the min.sh script executable
